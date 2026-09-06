@@ -153,8 +153,14 @@
                 <StackPanel>
                     <TextBlock Text="开源组件与本机目录" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,6" />
                     <TextBlock Style="{StaticResource Hint}" Margin="0,0,0,14"
-                               Text="本程序使用的第三方组件均为可商用的开源许可证（Apache-2.0 / MIT / BSD），完整清单与许可证全文见第三方组件声明。" />
+                               Text="安装与使用须遵守用户协议。本程序使用的第三方组件均为可商用的开源许可证（Apache-2.0 / MIT / BSD），完整清单见第三方组件声明。" />
                     <WrapPanel>
+                        <Button Style="{StaticResource OutlineButton}" Click="Eula_Click" Margin="0,0,8,0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Style="{StaticResource Icon}" Text="&#xE8A5;" />
+                                <TextBlock Text="用户协议" Margin="8,0,0,0" />
+                            </StackPanel>
+                        </Button>
                         <Button Style="{StaticResource OutlineButton}" Click="Notices_Click" Margin="0,0,8,0">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Style="{StaticResource Icon}" Text="&#xE8A5;" />

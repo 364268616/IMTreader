@@ -25,9 +25,21 @@
 ## 运行环境
 
 - Windows 10/11 x64（最低 1809 / 内部版本 17763）
-- [.NET 8 桌面运行时](https://dotnet.microsoft.com/zh-cn/download/dotnet/8.0)（从源码编译还需 SDK）
+- 安装包为自包含发布，**不必再单独安装 .NET**
+- 从源码编译需要 [.NET 8 SDK](https://dotnet.microsoft.com/zh-cn/download/dotnet/8.0)
 
 本仓库含 OCR 模型，克隆后即可编译，无需再下载模型。
+
+## 下载安装
+
+给普通用户：到 [GitHub Releases](https://github.com/364268616/IMTreader/releases) 下载 `广哥古籍阅读器-1.0.0-安装包.exe`，双击安装。安装过程中请阅读并勾选同意[用户协议](用户协议.txt)。
+
+- 默认安装到当前用户目录，一般不需要管理员权限
+- 默认创建桌面快捷方式
+- 卸载：开始菜单中的「卸载 广哥古籍阅读器」，或 Windows 的「应用和功能」
+- 卸载不会删除您的文献库（`%LocalAppData%\IMTReader`），以免误删整理成果
+
+Gitee 若因附件大小限制无法上传安装包，请使用 GitHub 下载。
 
 ## 从源码编译
 
@@ -51,9 +63,19 @@ src/IMTReader.Core    识别、文献库、检索、导出
 tests/IMTReader.Tests 单元测试与 OCR 流水线测试
 ```
 
-## 许可证
+## 许可证与用户协议
 
-[MIT](LICENSE)。第三方组件声明见 [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md)。
+- 源码许可证：[MIT](LICENSE)
+- 安装与使用：[用户协议与免责声明](用户协议.txt)（导入文献的版权、识别误差、AI 与免责条款请仔细阅读）
+- 第三方组件：[THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md)
+
+本地制作安装包（需已安装 [Inno Setup 6](https://jrsoftware.org/isinfo.php)）：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File setup\build-release.ps1
+```
+
+产物在 `dist\` 目录，该目录不入库。
 
 ## 请我喝杯咖啡
 

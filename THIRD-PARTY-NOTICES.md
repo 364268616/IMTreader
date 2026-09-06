@@ -71,6 +71,8 @@ Apache License 2.0 第 4 条、BSD 3-Clause 及 MIT 许可证的署名要求提�
 | xunit | 2.9.2 | Apache-2.0 |
 | xunit.runner.visualstudio | 2.8.2 | Apache-2.0 |
 | Microsoft.NET.Test.Sdk | 17.12.0 | MIT 及 Microsoft .NET Library 许可条款 |
+| Inno Setup | 6.x | Inno Setup License | 仅用于制作安装包，https://jrsoftware.org/isinfo.php |
+| ChineseSimplified.isl | — | MIT | Zhenghan Yang（kira-96），https://github.com/kira-96/Inno-Setup-Chinese-Simplified-Translation |
 
 ## 七、其他说明
 

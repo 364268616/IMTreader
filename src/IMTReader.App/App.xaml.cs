@@ -1,6 +1,7 @@
 using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
+using IMTReader.App.Dialogs;
 using IMTReader.App.Views;
 using IMTReader.Core.Services;
 
@@ -35,6 +36,12 @@ public partial class App : Application
 
         ThemeManager.Apply(AppServices.Settings.Current);
         AppServices.Settings.Changed += s => ThemeManager.Apply(s);
+
+        if (!EulaWindow.EnsureAccepted())
+        {
+            Shutdown();
+            return;
+        }
 
         var window = new MainWindow();
         MainWindow = window;

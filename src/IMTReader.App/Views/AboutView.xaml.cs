@@ -36,6 +36,17 @@ public partial class AboutView : UserControl, IActivatableView
         return string.IsNullOrWhiteSpace(value) ? null : value;
     }
 
+    private void Eula_Click(object sender, RoutedEventArgs e)
+    {
+        var path = Path.Combine(AppContext.BaseDirectory, "用户协议.txt");
+        if (!File.Exists(path))
+        {
+            MessageBox.Show(Window.GetWindow(this), "未找到用户协议文件：" + path, "关于", MessageBoxButton.OK, MessageBoxImage.Warning);
+            return;
+        }
+        Open(path);
+    }
+
     private void Notices_Click(object sender, RoutedEventArgs e)
     {
         var path = Path.Combine(AppContext.BaseDirectory, "THIRD-PARTY-NOTICES.md");

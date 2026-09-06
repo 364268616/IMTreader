@@ -71,5 +71,8 @@ public sealed class AppSettings
     // ---- 工具 ----
     public string DictionaryUrlTemplate { get; set; } = "https://www.zdic.net/hans/{0}";
 
+    /// <summary>已同意的用户协议版本（与 用户协议.txt 中的「协议版本」一致）。空表示尚未同意。</summary>
+    public string EulaAcceptedVersion { get; set; } = string.Empty;
+
     public AppSettings Clone() => (AppSettings)MemberwiseClone();
 }

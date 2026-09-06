@@ -36,6 +36,8 @@
   <ItemGroup>
     <!-- 第三方开源声明随程序分发（Apache-2.0 / BSD 的署名要求） -->
     <None Include="..\..\THIRD-PARTY-NOTICES.md" Link="THIRD-PARTY-NOTICES.md" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\..\用户协议.txt" Link="用户协议.txt" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\..\LICENSE" Link="LICENSE.txt" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <!--
