@@ -1,0 +1,190 @@
+<UserControl x:Class="IMTReader.App.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource WindowBackgroundBrush}"
+             FontFamily="{StaticResource UiFontFamily}">
+    <UserControl.Resources>
+        <Style x:Key="Group" TargetType="Border" BasedOn="{StaticResource Card}" />
+        <Style x:Key="GroupTitle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Margin" Value="0,0,0,10" />
+        </Style>
+        <Style TargetType="TextBox" BasedOn="{StaticResource FormTextBox}" />
+        <Style TargetType="ComboBox">
+            <Setter Property="Margin" Value="0,3" />
+            <Setter Property="Padding" Value="4,3" />
+        </Style>
+        <Style TargetType="CheckBox">
+            <Setter Property="Margin" Value="0,5" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+    </UserControl.Resources>
+    <Grid Margin="28,24,28,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="0,0,0,18">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Margin="0,0,16,0">
+                <TextBlock Text="设置" Style="{StaticResource PageTitle}" />
+                <TextBlock Style="{StaticResource Hint}" Margin="0,5,0,0" Text="修改后点“保存设置”生效；识别相关的改动会在下一次识别时应用。" />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
+                <Button Style="{StaticResource OutlineButton}" Content="放弃修改" Click="Reload_Click" Margin="0,0,8,0" />
+                <Button Style="{StaticResource PrimaryButton}" Content="保存设置" Click="Save_Click" />
+            </StackPanel>
+        </Grid>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="0,0,10,20">
+            <StackPanel MaxWidth="900" HorizontalAlignment="Left">
+
+                <Border Style="{StaticResource Group}">
+                    <StackPanel>
+                        <TextBlock Text="识别" Style="{StaticResource GroupTitle}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="170" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="识别引擎" Style="{StaticResource FormLabel}" />
+                            <ComboBox Grid.Row="0" Grid.Column="1" SelectedIndex="{Binding OcrEngineIndex}" Width="320" HorizontalAlignment="Left">
+                                <ComboBoxItem Content="PaddleOCR（本机离线，推荐；支持竖排/繁体）" />
+                                <ComboBoxItem Content="Windows 内置 OCR（仅横排，需系统中文语言包）" />
+                                <ComboBoxItem Content="AI 视觉大模型（需配置接口；适合复杂版式、小注）" />
+                            </ComboBox>
+                            <TextBlock Grid.Row="1" Text="模型目录" Style="{StaticResource FormLabel}" />
+                            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                                <TextBox Text="{Binding OcrModelDirectory}" Width="360" ToolTip="留空使用随程序分发的飞桨官方 PP-OCRv5 模型；也可指向自行下载的 PP-OCR 模型目录" />
+                                <Button Style="{StaticResource ToolButton}" Content="选择…" Click="PickModelDir_Click" Margin="6,0,0,0" />
+                                <Button Style="{StaticResource ToolButton}" Content="用内置模型" Click="ResetModelDir_Click" />
+                            </StackPanel>
+                            <TextBlock Grid.Row="2" Text="CPU 线程数 / 批大小" Style="{StaticResource FormLabel}" />
+                            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                                <TextBox Text="{Binding OcrThreads}" Width="100" />
+                                <TextBox Text="{Binding OcrBatchSize}" Width="100" Margin="10,0,0,0" />
+                                <TextBlock Text="批大小越大整页越快，32–64 较合适" Style="{StaticResource Hint}" VerticalAlignment="Center" Margin="10,0,0,0" />
+                            </StackPanel>
+                            <TextBlock Grid.Row="3" Text="检测长边上限（像素）" Style="{StaticResource FormLabel}" />
+                            <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+                                <TextBox Text="{Binding OcrMaxSideLen}" Width="100" />
+                                <TextBlock Text="密集小字（报刊）建议 2048–3000；越大越慢" Style="{StaticResource Hint}" VerticalAlignment="Center" Margin="10,0,0,0" />
+                            </StackPanel>
+                            <TextBlock Grid.Row="4" Text="PDF 识别分辨率（DPI）" Style="{StaticResource FormLabel}" />
+                            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding OcrDpi}" Width="100" HorizontalAlignment="Left" />
+                            <TextBlock Grid.Row="5" Text="最低置信度（0–1）" Style="{StaticResource FormLabel}" />
+                            <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding OcrMinScore}" Width="100" HorizontalAlignment="Left" />
+                            <TextBlock Grid.Row="6" Text="Windows OCR 语言" Style="{StaticResource FormLabel}" />
+                            <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding WindowsOcrLanguage}" Width="160" HorizontalAlignment="Left" ToolTip="auto 或语言标记，如 zh-Hant-TW、zh-Hans-CN" />
+                            <StackPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal">
+                                <CheckBox Content="把相邻行/栏合并为段落块" IsChecked="{Binding MergeLinesIntoBlocks}" Margin="0,5,20,5" />
+                                <CheckBox Content="启用文字方向分类（旋转页面时开启）" IsChecked="{Binding UseAngleClassifier}" Margin="0,5,20,5" />
+                            </StackPanel>
+                            <CheckBox Grid.Row="8" Grid.Column="1" Content="拓片识别时先做二值化（反白后再阈值处理，噪点多时可尝试）" IsChecked="{Binding RubbingBinarize}" />
+                        </Grid>
+                        <TextBlock Text="{Binding RuntimeInfo}" Style="{StaticResource Hint}" Margin="0,8,0,0" />
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource Group}">
+                    <StackPanel>
+                        <TextBlock Text="显示与阅读" Style="{StaticResource GroupTitle}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="170" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="页面渲染分辨率（DPI）" Style="{StaticResource FormLabel}" />
+                            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding RenderDpi}" Width="100" HorizontalAlignment="Left" />
+                            <TextBlock Grid.Row="1" Text="正文字体" Style="{StaticResource FormLabel}" />
+                            <ComboBox Grid.Row="1" Grid.Column="1" IsEditable="True" Text="{Binding FontFamily}" ItemsSource="{Binding FontChoices}" Width="220" HorizontalAlignment="Left" />
+                            <TextBlock Grid.Row="2" Text="默认字号" Style="{StaticResource FormLabel}" />
+                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding FontSize}" Width="100" HorizontalAlignment="Left" />
+                            <TextBlock Grid.Row="3" Text="阅读区配色" Style="{StaticResource FormLabel}" />
+                            <ComboBox Grid.Row="3" Grid.Column="1" SelectedIndex="{Binding ThemeIndex}" Width="220" HorizontalAlignment="Left">
+                                <ComboBoxItem Content="纸色（护眼）" />
+                                <ComboBoxItem Content="明亮" />
+                                <ComboBoxItem Content="夜间" />
+                            </ComboBox>
+                            <TextBlock Grid.Row="4" Text="默认高亮颜色" Style="{StaticResource FormLabel}" />
+                            <ComboBox Grid.Row="4" Grid.Column="1" IsEditable="True" Text="{Binding DefaultHighlightColor}" Width="160" HorizontalAlignment="Left">
+                                <ComboBoxItem Content="#FFF176" />
+                                <ComboBoxItem Content="#A5D6A7" />
+                                <ComboBoxItem Content="#90CAF9" />
+                                <ComboBoxItem Content="#F48FB1" />
+                                <ComboBoxItem Content="#FFCC80" />
+                            </ComboBox>
+                            <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal">
+                                <CheckBox Content="在原图上显示文本块框" IsChecked="{Binding ShowBlockBoxes}" Margin="0,5,20,5" />
+                                <CheckBox Content="检索时简繁互通、异体字互通" IsChecked="{Binding SearchIgnoreVariants}" />
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource Group}">
+                    <StackPanel>
+                        <TextBlock Text="AI 辅助（OpenAI 兼容接口）" Style="{StaticResource GroupTitle}" />
+                        <TextBlock Style="{StaticResource Hint}" Margin="0,0,0,8"
+                                   Text="用于自动标点（句读）、白话翻译、摘要、实体抽取、疑难注释，以及“AI 视觉模型”识别引擎。填写任意 OpenAI 兼容服务（DeepSeek、通义千问、智谱、Ollama 本地等）。密钥仅保存在本机设置文件中。" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="170" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition />
+                            </Grid.RowDefinitions>
+                            <CheckBox Grid.Row="0" Grid.Column="1" Content="启用 AI 辅助功能" IsChecked="{Binding AiEnabled}" />
+                            <TextBlock Grid.Row="1" Text="快速预设" Style="{StaticResource FormLabel}" />
+                            <ComboBox Grid.Row="1" Grid.Column="1" x:Name="PresetBox" ItemsSource="{Binding AiPresets}" Width="320" HorizontalAlignment="Left" SelectionChanged="PresetBox_SelectionChanged">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <TextBlock Grid.Row="2" Text="接口地址（Base URL）" Style="{StaticResource FormLabel}" />
+                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding AiBaseUrl}" Width="420" HorizontalAlignment="Left" />
+                            <TextBlock Grid.Row="3" Text="API 密钥" Style="{StaticResource FormLabel}" />
+                            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding AiApiKey}" Width="420" HorizontalAlignment="Left" />
+                            <TextBlock Grid.Row="4" Text="文本模型" Style="{StaticResource FormLabel}" />
+                            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding AiModel}" Width="260" HorizontalAlignment="Left" />
+                            <TextBlock Grid.Row="5" Text="视觉模型（可选）" Style="{StaticResource FormLabel}" />
+                            <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding AiVisionModel}" Width="260" HorizontalAlignment="Left" ToolTip="用于“AI 视觉模型”识别引擎；留空则使用文本模型" />
+                            <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal" Margin="0,6,0,0">
+                                <Button Style="{StaticResource ToolButton}" Content="测试连接（先保存）" Click="TestAi_Click" />
+                                <TextBlock Text="{Binding TestResult}" VerticalAlignment="Center" Margin="10,0,0,0" Style="{StaticResource Hint}" />
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource Group}">
+                    <StackPanel>
+                        <TextBlock Text="工具" Style="{StaticResource GroupTitle}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="170" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="查字典网址模板" Style="{StaticResource FormLabel}" />
+                            <TextBox Grid.Column="1" Text="{Binding DictionaryUrlTemplate}" Width="420" HorizontalAlignment="Left" ToolTip="{}{0} 会被替换为选中的字词，默认为汉典" />
+                        </Grid>
+                        <TextBlock Style="{StaticResource Hint}" Margin="0,8,0,0"
+                                   Text="扩展文件（放在数据目录）：variants.user.txt 每行“异体字 规范字”，用于检索归一；eras.user.txt 每行“朝代 年号 起始年 结束年”，用于纪年换算。" />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

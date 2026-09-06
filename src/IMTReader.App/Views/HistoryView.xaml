@@ -1,0 +1,26 @@
+<UserControl x:Class="IMTReader.App.Views.HistoryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource WindowBackgroundBrush}"
+             FontFamily="{StaticResource UiFontFamily}">
+    <Grid Margin="28,24,28,24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Margin="0,0,0,18">
+            <TextBlock Text="阅读历史" Style="{StaticResource PageTitle}" />
+            <TextBlock Style="{StaticResource Hint}" Margin="0,5,0,0" Text="按最近阅读时间排序，双击从上次停下的页面继续。" />
+        </StackPanel>
+        <DataGrid x:Name="Grid" Grid.Row="1" Style="{StaticResource ListGrid}" ItemsSource="{Binding Recent}" MouseDoubleClick="Grid_MouseDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="标题" Binding="{Binding Title}" Width="3*" MinWidth="160" />
+                <DataGridTextColumn Header="上次阅读" Binding="{Binding LastOpened}" Width="150" />
+                <DataGridTextColumn Header="阅读位置" Binding="{Binding LastPageText}" Width="110" />
+                <DataGridTextColumn Header="页数" Binding="{Binding PageCount}" Width="80" />
+                <DataGridTextColumn Header="已识别" Binding="{Binding OcrProgress}" Width="90" />
+                <DataGridTextColumn Header="类型" Binding="{Binding Kind}" Width="100" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

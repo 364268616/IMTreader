@@ -1,0 +1,57 @@
+# 编译与发布产物
+bin/
+obj/
+publish/
+*.exe
+*.dll
+*.pdb
+*.deps.json
+*.runtimeconfig.json
+*.runtimeconfig.dev.json
+
+# 例外：源码树里没有需要入库的托管程序集；OCR 模型是数据文件，不在此列
+
+# Visual Studio / Rider / VS Code
+.vs/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.rsuser
+
+# 测试与覆盖率
+TestResults/
+[Tt]est[Rr]esult*/
+*.trx
+coverage/
+coverage*.json
+coverage*.xml
+
+# NuGet
+*.nupkg
+*.snupkg
+**/packages/*
+!**/packages/build/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# 日志与本机数据（程序运行时写到 %LocalAppData%\IMTReader，不应入库）
+*.log
+logs/
+settings.json
+library.db
+variants.user.txt
+eras.user.txt
+
+# 系统与编辑器杂文件
+Thumbs.db
+Desktop.ini
+ehthumbs.db
+$RECYCLE.BIN/
+.DS_Store
+*~
+*.tmp
+*.swp
+*.bak

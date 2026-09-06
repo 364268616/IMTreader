@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>IMTReader.App</RootNamespace>
+    <!-- 可执行文件名与产品名一致；命名空间仍为 IMTReader.App，不影响代码 -->
+    <AssemblyName>广哥古籍阅读器</AssemblyName>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Resources\app.ico</ApplicationIcon>
+    <StartupObject>IMTReader.App.App</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IMTReader.Core\IMTReader.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\app.ico" />
+    <Resource Include="..\..\收款码.jpg" Link="Resources\donate-wechat.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <!-- 原生依赖（Paddle 推理运行时、OpenCV、PDFium）需在可执行工程中直接引用，其 build targets 才会把文件复制到输出目录 -->
+    <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.11.0.20250507" />
+    <PackageReference Include="PDFtoImage" Version="5.4.0" />
+    <PackageReference Include="Sdcb.PaddleInference.runtime.win64.mkl" Version="3.3.1.70" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- 第三方开源声明随程序分发（Apache-2.0 / BSD 的署名要求） -->
+    <None Include="..\..\THIRD-PARTY-NOTICES.md" Link="THIRD-PARTY-NOTICES.md" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <!--
+    原生包会附带本程序用不到的文件：libSkiaSharp.pdb 是调试符号（85 MB），
+    opencv_videoio_ffmpeg 是视频解码库（26 MB，本程序只做静态图像处理）。
+    这里在生成与发布后删除，避免安装包无谓增大。
+  -->
+  <Target Name="TrimUnusedNativeFiles" AfterTargets="Build;Publish">
+    <ItemGroup>
+      <UnusedNativeFile Include="$(OutDir)libSkiaSharp.pdb" />
+      <UnusedNativeFile Include="$(OutDir)opencv_videoio_ffmpeg*.dll" />
+      <UnusedNativeFile Include="$(PublishDir)libSkiaSharp.pdb" Condition="'$(PublishDir)' != ''" />
+      <UnusedNativeFile Include="$(PublishDir)opencv_videoio_ffmpeg*.dll" Condition="'$(PublishDir)' != ''" />
+    </ItemGroup>
+    <Delete Files="@(UnusedNativeFile)" ContinueOnError="true" />
+  </Target>
+
+</Project>

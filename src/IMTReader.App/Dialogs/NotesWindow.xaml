@@ -1,0 +1,32 @@
+<Window x:Class="IMTReader.App.Dialogs.NotesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="笔记" Width="780" Height="660" MinWidth="480" MinHeight="360"
+        WindowStartupLocation="CenterOwner" Background="{StaticResource ToolbarBrush}" ShowInTaskbar="False">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Padding="12,8" BorderBrush="{StaticResource ToolbarBorderBrush}" BorderThickness="0,0,0,1">
+            <DockPanel LastChildFill="False">
+                <ToggleButton x:Name="ReadToggle" Style="{StaticResource ToolToggle}" Content="阅读" Checked="ReadToggle_Changed" Unchecked="ReadToggle_Changed" ToolTip="切换阅读/编辑模式" />
+                <Button Style="{StaticResource PrimaryButton}" Content="保存笔记" Click="Save_Click" />
+                <Button Style="{StaticResource SaveButton}" Content="导出笔记" Click="Export_Click" />
+                <Button Style="{StaticResource ToolButton}" Content="插入出处" Click="InsertCitation_Click" ToolTip="在光标处插入当前页出处" />
+                <Button Style="{StaticResource ToolButton}" Content="插入当前块" Click="InsertBlock_Click" ToolTip="把当前选中的文本块作为引文插入" />
+                <TextBlock x:Name="StatusText" DockPanel.Dock="Right" VerticalAlignment="Center" Foreground="{StaticResource MutedTextBrush}" />
+            </DockPanel>
+        </Border>
+        <Grid Grid.Row="1">
+            <TextBox x:Name="Editor" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
+                     FontFamily="{DynamicResource ReadingFontFamily}" FontSize="15" Padding="14" BorderThickness="0"
+                     Background="{DynamicResource ReadingBackgroundBrush}" Foreground="{DynamicResource ReadingForegroundBrush}"
+                     TextChanged="Editor_TextChanged" SpellCheck.IsEnabled="False" />
+            <FlowDocumentScrollViewer x:Name="Reader" Visibility="Collapsed" Background="{DynamicResource ReadingBackgroundBrush}" IsSelectionEnabled="True" />
+        </Grid>
+        <TextBlock Grid.Row="2" Margin="12,6" Style="{StaticResource Hint}"
+                   Text="支持简易 Markdown：# 标题、**粗体**、==高亮==、- 列表、1. 编号、> 引用。笔记随文献保存，可导出为 Markdown 或纯文本。" />
+    </Grid>
+</Window>

@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>IMTReader.Core</RootNamespace>
+    <AssemblyName>IMTReader.Core</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.9" />
+    <PackageReference Include="OpenCvSharp4" Version="4.11.0.20250507" />
+    <PackageReference Include="PDFtoImage" Version="5.4.0" />
+    <PackageReference Include="Sdcb.PaddleOCR" Version="3.3.1" />
+    <PackageReference Include="System.Speech" Version="9.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\t2s.txt" LogicalName="IMTReader.Core.Resources.t2s.txt" />
+    <EmbeddedResource Include="Resources\variants.txt" LogicalName="IMTReader.Core.Resources.variants.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- 飞桨官方 PP-OCRv5 推理模型（Apache-2.0），随程序一起复制到输出目录 -->
+    <None Include="OcrModels\**\*" CopyToOutputDirectory="PreserveNewest" LinkBase="OcrModels" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="IMTReader.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- WPF 工程默认不引入这两个隐式 using，这里显式加回 -->
+    <Using Include="System.IO" />
+    <Using Include="System.Net.Http" />
+  </ItemGroup>
+
+</Project>

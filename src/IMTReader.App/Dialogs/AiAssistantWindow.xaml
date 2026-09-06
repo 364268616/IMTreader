@@ -1,0 +1,47 @@
+<Window x:Class="IMTReader.App.Dialogs.AiAssistantWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="AI 助手" Width="860" Height="680" MinWidth="560" MinHeight="420"
+        WindowStartupLocation="CenterOwner" Background="{StaticResource ToolbarBrush}" ShowInTaskbar="False">
+    <Grid Margin="14">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0" Margin="0,0,0,6" LastChildFill="False">
+            <TextBlock Text="原文" FontWeight="Bold" VerticalAlignment="Center" />
+            <TextBlock x:Name="SourceInfo" Margin="10,0" VerticalAlignment="Center" Foreground="{StaticResource MutedTextBrush}" />
+            <Button Style="{StaticResource ToolButton}" Content="载入当前块" Click="LoadBlock_Click" DockPanel.Dock="Right" />
+            <Button Style="{StaticResource ToolButton}" Content="载入本页全文" Click="LoadPage_Click" DockPanel.Dock="Right" />
+        </DockPanel>
+        <TextBox Grid.Row="1" x:Name="SourceBox" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
+                 FontFamily="{DynamicResource ReadingFontFamily}" FontSize="15" Padding="8"
+                 Background="{DynamicResource ReadingBackgroundBrush}" Foreground="{DynamicResource ReadingForegroundBrush}" />
+
+        <WrapPanel Grid.Row="2" Margin="0,10,0,6">
+            <Button Style="{StaticResource PrimaryButton}" Content="自动标点（句读）" Click="Punctuate_Click" />
+            <Button Style="{StaticResource PrimaryButton}" Content="白话翻译" Click="Translate_Click" />
+            <Button Style="{StaticResource PrimaryButton}" Content="内容摘要" Click="Summarize_Click" />
+            <Button Style="{StaticResource PrimaryButton}" Content="实体抽取" Click="Entities_Click" />
+            <Button Style="{StaticResource PrimaryButton}" Content="疑难注释 / 校勘提示" Click="Explain_Click" />
+            <Button x:Name="CancelButton" Style="{StaticResource PinkButton}" Content="取消" Click="Cancel_Click" IsEnabled="False" />
+            <TextBlock x:Name="StatusText" VerticalAlignment="Center" Margin="10,0" Foreground="{StaticResource MutedTextBrush}" />
+        </WrapPanel>
+
+        <TextBox Grid.Row="3" x:Name="OutputBox" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
+                 FontFamily="{DynamicResource ReadingFontFamily}" FontSize="15" Padding="8"
+                 Background="White" Foreground="{StaticResource TextBrush}" />
+
+        <DockPanel Grid.Row="4" Margin="0,10,0,0" LastChildFill="False">
+            <TextBlock Style="{StaticResource Hint}" VerticalAlignment="Center" Text="AI 结果仅供参考，替换原文前请核对原图。" />
+            <Button Style="{StaticResource ToolButton}" Content="关闭" Click="Close_Click" DockPanel.Dock="Right" MinWidth="70" />
+            <Button Style="{StaticResource ToolButton}" Content="追加到笔记" Click="AppendNotes_Click" DockPanel.Dock="Right" Margin="0,0,8,0" />
+            <Button x:Name="ReplaceButton" Style="{StaticResource AmberButton}" Content="用结果替换原文块" Click="Replace_Click" DockPanel.Dock="Right" Margin="0,0,8,0" IsEnabled="False" />
+            <Button Style="{StaticResource BlueButton}" Content="复制结果" Click="Copy_Click" DockPanel.Dock="Right" Margin="0,0,8,0" />
+        </DockPanel>
+    </Grid>
+</Window>
