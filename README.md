@@ -32,19 +32,24 @@
 
 ## 下载安装
 
-给普通用户：到 [GitHub Releases](https://github.com/364268616/IMTreader/releases) 下载 `广哥古籍阅读器-1.0.0-安装包.exe`，双击安装。安装过程中请阅读并勾选同意[用户协议](用户协议.txt)。
+**[下载 Windows 安装包（1.0.0）](https://imtreader.oss-cn-shanghai.aliyuncs.com/%E5%B9%BF%E5%93%A5%E5%8F%A4%E7%B1%8D%E9%98%85%E8%AF%BB%E5%99%A8-1.0.0-%E5%AE%89%E8%A3%85%E5%8C%85.exe)**
 
-- 默认安装到当前用户目录，一般不需要管理员权限
+文件名：`广哥古籍阅读器-1.0.0-安装包.exe`（约 136 MB）  
+SHA256：`8667E4795B6D1C3E1FA650FD642897E501916D6B61F8F3DCF4833F4C0AD07CB5`
+
+双击安装。安装与首次启动时请阅读并同意[用户协议](用户协议.txt)。
+
+- Windows 10/11 64 位；安装包已包含运行库，不必另装 .NET
+- 默认装到当前用户目录，一般不需要管理员权限
 - 默认创建桌面快捷方式
-- 卸载：开始菜单中的「卸载 广哥古籍阅读器」，或 Windows 的「应用和功能」
-- 卸载不会删除您的文献库（`%LocalAppData%\IMTReader`），以免误删整理成果
-
-Gitee 若因附件大小限制无法上传安装包，请使用 GitHub 下载。
+- 卸载：开始菜单中的「卸载 广哥古籍阅读器」，或 Windows「应用和功能」
+- 卸载不会删除文献库（`%LocalAppData%\IMTReader`）
 
 ## 从源码编译
 
 ```powershell
-git clone https://github.com/364268616/IMTreader.git
+git clone https://gitee.com/QinGuang/imtreader.git
+# 或 git clone https://github.com/364268616/IMTreader.git
 cd IMTreader
 dotnet build IMTReader.sln -c Release
 ```
