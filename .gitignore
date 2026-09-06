@@ -37,6 +37,9 @@ project.lock.json
 project.fragment.lock.json
 artifacts/
 
+# 本地文档（不入库）
+/docs/
+
 # 日志与本机数据（程序运行时写到 %LocalAppData%\IMTReader，不应入库）
 *.log
 logs/
